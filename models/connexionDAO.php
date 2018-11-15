@@ -3,14 +3,17 @@
 include_once("connexionBDD.php");
 
 //Cette fonction vérifie si le couple (id,mdp) saisi est présent dans la bdd
-function authentication($id,$password){
+function authentication($conn_id,$password){
 
     //new connection to database
     $conn = bddConnexion();
 
+    //Hashage du password passé en paramètre
+    $hashedPassword = sha1($password);
+
     // prepare and bind
     $stmt = $conn->prepare("SELECT * FROM USERS WHERE conn_id=? AND mdp=?");
-    $stmt->bind_param("ss", $id, $password);
+    $stmt->bind_param("ss", $conn_id, $hashedPassword);
     
     //execute and store the results
     $stmt->execute();
