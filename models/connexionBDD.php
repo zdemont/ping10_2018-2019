@@ -4,8 +4,8 @@ function bddConnexion(){
 
 $servername = "localhost";
 $username = "root";
-$password = "";
-$dbname = "test_ping10";
+$password = "root";
+$dbname = "ping10";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password,$dbname);
