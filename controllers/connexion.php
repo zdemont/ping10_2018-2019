@@ -85,11 +85,11 @@ if(isset($_POST['connexion'])){
 
             header('location: ../views/retailer.phtml');
 
-        }else {
-            $msg_error[] = 'error connexion !';
-            header('location: ../views/connexion.phtml');
         }
 
+    }else {
+        $msg_error[] = 'error connexion !';
+        header('location: ../views/connexion.phtml');
     }
 }
 
