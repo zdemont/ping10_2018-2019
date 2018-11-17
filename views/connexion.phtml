@@ -8,6 +8,15 @@
 <body>
     <form method="post" action="../controllers/connexion.php" class="form-group">
 
+     <?php
+    session_start();
+    if (isset($_SESSION['error_connexion'])) {
+        foreach ($_SESSION['error_connexion'] as $erreur) {
+            echo  '<p style="color: red">'.$erreur . '</p>';
+        }
+    }
+    //var_dump($_SESSION);
+    ?>
     <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <label for="id">Identifiant :</label>
         <input type="text" class="form-control" id="id" name="id" required/>

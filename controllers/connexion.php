@@ -88,7 +88,9 @@ if(isset($_POST['connexion'])){
         }
 
     }else {
+        session_start();
         $msg_error[] = 'error connexion !';
+        $_SESSION['error_connexion'] = $msg_error;
         header('location: ../views/connexion.phtml');
     }
 }
