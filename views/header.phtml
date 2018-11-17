@@ -1,0 +1,17 @@
+<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="salutation">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
+            
+            <h4 class="card-title">Bienvenue <?php echo $_SESSION['user']['prenom'].' '.$_SESSION['user']['nom'] ?></h4>
+            <p class="card-text"><?php echo "Nous sommes le  " . (new \DateTime())->format('d/m/Y') ; ?> </p>
+
+            <a href="../controllers/deconnexion.php" class="btn-link">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Déconnexion</a>
+        </div>
+
+    </div>
+    </div>
+
+</div>
