@@ -3,15 +3,14 @@ include_once("../models/connexionDAO.php");
 include_once("../models/userDAO.php");
 
 
-
-
 //if get post from connexion.phtml do connexion processing
 if(isset($_POST['connexion'])){
-
 
     //transform all character on HTML form 
     $id = htmlentities($_POST['id']);
     $password = htmlentities($_POST['password']);
+
+    var_dump($id); 
 
     $msg_error=[];
     $autorisationConnection = true;
@@ -39,7 +38,7 @@ if(isset($_POST['connexion'])){
     //Verification du mot de passe 
     $verifPassword = password_verify($password, $user['mdp']);
     if ($verifPassword == false){
-        var_dump("wrong password ");
+        //var_dump("wrong password ");
         $msg_error[] = 'user or password are wrong !';
         $autorisationConnection=false;
     }
@@ -59,7 +58,7 @@ if(isset($_POST['connexion'])){
                 'prenom' => $user['prenom'],
                 'statut' => $user['statut']
             );
-            header('location: ../views/admin.phtml');
+            header('location: ../views/start.phtml');
 
         }elseif($user['statut'] == 'conseiller'){
             session_start();
@@ -83,7 +82,7 @@ if(isset($_POST['connexion'])){
                 'statut' => $user['statut']
             );
 
-            header('location: ../views/retailer.phtml');
+            header('location: ../views/start.phtml');
 
         }
 
@@ -91,7 +90,7 @@ if(isset($_POST['connexion'])){
         session_start();
         $msg_error[] = 'error connexion !';
         $_SESSION['error_connexion'] = $msg_error;
-        header('location: ../views/connexion.phtml');
+        header('location: ../views/index.phtml');
     }
 }
 

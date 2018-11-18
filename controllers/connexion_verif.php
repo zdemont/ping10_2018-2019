@@ -2,4 +2,4 @@
 session_start();
 session_unset();
 session_destroy();
-header('location:../views/connexion.phtml');
+header('location:../views/index.phtml');
