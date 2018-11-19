@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carto</title>
+
+<!-- Styles -->
+<style>
+     #map{ width: 1000px; height: 700px; }   
+</style>
+
+<!-- Resources -->
+<link rel="stylesheet" href="assets/leaflet/leaflet.css"/>     
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/leaflet/leaflet.js"></script>
+</head>
+
+<body>
+<div id="map" class="map"></div>
+
+<script>
+//Créer un nouveau leaflet map
+    var map = L.map('map').setView([49.68585052959949, 0.678565813782002], 7);
+
+// Récupération des images de la carte :
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+        
+//Récuperation des données de IRIS sur un API        
+     let URL =
+"https://public.opendatasoft.com/api/records/1.0/search/?dataset=contours-iris-2015&rows=100&sort=iris&facet=nom_com&facet=nom_dept&facet=nom_region&refine.nom_region=HAUTE-NORMANDIE";
+        
+$.get(URL, function(data, status) {
+    creerContoursIris(data);
+})
+
+        
+function traitement(data) {
+    var data_iris = [];
+    var j=10;
+    data.records.forEach(element => {
+        let code_iris = element.fields.code_iris;
+        let nom_iris = element.fields.nom_iris;
+        let contour_iris = element.fields.geo_shape["coordinates"];
+        let coord = [];
+        for( let i=0;i<contour_iris[0].length;i++){
+            coord.push([contour_iris[0][i][1], contour_iris[0][i][0]]);
+        }
+        //doonnées à afficher
+        data_iris.push({"code_iris":code_iris, "nom_iris":nom_iris, "coords":coord, "nbr_client":j})
+        j=j+2;
+    });
+    
+   // console.log(data_iris);
+    return data_iris;
+}
+
+        
+function creerContoursIris(data){
+     //Ajouter des contours de IRIS sur le map
+    let coordinations = traitement(data);
+    let size = traitement(data).length;
+    for(let i=0; i<size;i++){
+        let poly = traitement(data)[i];
+        console.log(poly);
+        var iris = L.polygon(poly["coords"],{color: "blue"}).addTo(map);
+        iris.bindPopup(`<b>${poly["nom_iris"]}</b> <br/>nbr_client:${poly["nbr_client"]}`);  
+    }   
+}
+    </script>
+</body>
+
+</html>
+
